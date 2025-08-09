@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"url-shortener/internal/config"
+	"github.com/ehaxi/url-shortener/internal/config"
 )
 
 func main() {
