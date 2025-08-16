@@ -7,6 +7,10 @@ import (
 	"github.com/ehaxi/url-shortener/internal/config"
 	"github.com/ehaxi/url-shortener/internal/lib/logger/sl"
 	"github.com/ehaxi/url-shortener/internal/storage/sqlite"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+
+	mwLogger "github.com/ehaxi/url-shortener/internal/http-server/middleware/logger"
 )
 
 const (
@@ -30,6 +34,12 @@ func main() {
 	}
 
 	_ = storage
+
+	router := chi.NewRouter()
+
+	router.Use(middleware.RequestID)
+	router.Use(middleware.Logger)
+	router.Use(mwLogger.New(log))
 }
 
 func setupLogger(env string) *slog.Logger {
